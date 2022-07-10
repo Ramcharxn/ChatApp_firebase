@@ -3,18 +3,20 @@ import { useEffect } from 'react'
 import { auth, db } from '../firebase'
 import Signout from './Signout'
 import firebase from 'firebase'
+import { useContext } from 'react'
+import { Contact } from './Sidebar'
 
-export default function Chat() {
+export default function Chat({ details }) {
   const [text, setText] = useState('')
-
+  console.log(details)
   const { photoURL, uid } = auth.currentUser
-  const val = localStorage.getItem('FireChat-contact')
   
-  var userName, userId
+  const userName = details.userName
+  const userId = details.userId
   
-  if (val !== null){
-    [userName, userId] = val.split(',')
-  }
+  // if (val !== null){
+  //   [userName, userId] = val.split(',')
+  // }
 
 
   const [ messageList, setMessageList ] = useState([])
@@ -48,16 +50,17 @@ export default function Chat() {
         } 
       }))
     })
-  },[])
+  },[userId])
 
   return (
     <div>
       <Signout />
 
-      {userName}
+      {userName} <br />
+      {userId}
 
       {
-        val == null ?
+        !userId ? 
         <p>
           welcome to ramChat
         </p> :

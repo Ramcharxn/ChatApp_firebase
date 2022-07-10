@@ -4,14 +4,16 @@ import NewConversation from './support/NewConversation'
 import { UserContext } from '../App'
 import { useEffect } from 'react'
 import { db } from '../firebase'
+import PassDetails from './support/PassDetails'
 
-export default function Sidebar() {
+export const Contact = React.createContext()
+
+export default function Sidebar({ details }) {
   const user = useContext(UserContext)
   const [ contactList, setContactList ] = useState([])
 
   const handleClick = (contact) => {
-    localStorage.setItem('FireChat-contact',[contact.userName, contact.userId])
-    // console.log(chatId)
+    details(contact)
   }
 
   useEffect(() => {
